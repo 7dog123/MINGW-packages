@@ -1,0 +1,60 @@
+_realname=hash-library
+pkgbase=mingw-w64-${_realname}
+pkgname=("${MINGW_PACKAGE_PREFIX}-${_realname}")
+pkgver=8.0
+pkgrel=1
+pkgdesc="Portable C++ hashing library (mingw-w64)"
+arch=('any')
+mingw_arch=('mingw32' 'ucrt64' 'clang64' 'clangarm64')
+url="https://create.stephan-brumme.com/hash-library/"
+msys2_repository_url="https://github.com/stbrumme/hash-library"
+license=("spdx:Zlib")
+
+makedepends=(
+  "${MINGW_PACKAGE_PREFIX}-cc"
+  "${MINGW_PACKAGE_PREFIX}-autotools"
+  "git"
+)
+
+_commit=d389d18112bcf7e4786ec5e8723f3658a7f433d7
+
+source=(
+  "git+https://github.com/stbrumme/hash-library#commit=${_commit}"
+  "auto-tools.patch"
+  "ensure_compatibility_with_mingw.patch"
+)
+
+sha256sums=(
+  'SKIP'
+  'cae1b9c9848a89d82a428768d5794d815efc38a284983aa94e6e1cdce5c175686e1'
+  '94f27c38df938754d44592b0bbcc0f9ea10b8866b1b28c1c13adb5d4735b4032'
+)
+
+prepare() {
+  cd "${srcdir}/${_realname}"
+
+  patch -Np1 -i "${srcdir}/auto-tools.patch"
+  patch -Np1 -i "${srcdir}/ensure_compatibility_with_mingw.patch"
+
+  autoreconf -fiv
+}
+
+build() {
+  mkdir -p "${srcdir}/build-${MSYSTEM}"
+  cd "${srcdir}/build-${MSYSTEM}"
+
+  ../hash-library/configure \
+    --prefix="${MINGW_PREFIX}" \
+    --build="${MINGW_CHOST}" \
+    --host="${MINGW_CHOST}" \
+    --disable-shared \
+    --enable-static
+
+  make
+}
+
+package() {
+  cd "${srcdir}/build-${MSYSTEM}"
+
+  make DESTDIR="${pkgdir}" install
+}

@@ -1,0 +1,78 @@
+diff --git a/crc32.cpp b/crc32.cpp
+index a1ad3c5..7fab2b9 100644
+--- a/crc32.cpp
++++ b/crc32.cpp
+@@ -7,7 +7,7 @@
+ #include "crc32.h"
+ 
+ // big endian architectures need #define __BYTE_ORDER __BIG_ENDIAN
+-#ifndef _MSC_VER
++#if !defined(_MSC_VER) && !defined(__MINGW32__) && !defined(__MINGW64__)
+ #include <endian.h>
+ #endif
+ 
+diff --git a/keccak.cpp b/keccak.cpp
+index cba1cae..f099ed8 100644
+--- a/keccak.cpp
++++ b/keccak.cpp
+@@ -7,7 +7,7 @@
+ #include "keccak.h"
+ 
+ // big endian architectures need #define __BYTE_ORDER __BIG_ENDIAN
+-#ifndef _MSC_VER
++#if !defined(_MSC_VER) && !defined(__MINGW32__) && !defined(__MINGW64__)
+ #include <endian.h>
+ #endif
+ 
+diff --git a/md5.cpp b/md5.cpp
+index 2743319..5c8adc1 100644
+--- a/md5.cpp
++++ b/md5.cpp
+@@ -6,7 +6,7 @@
+ 
+ #include "md5.h"
+ 
+-#ifndef _MSC_VER
++#if !defined(_MSC_VER) && !defined(__MINGW32__) && !defined(__MINGW64__)
+ #include <endian.h>
+ #endif
+ 
+diff --git a/sha1.cpp b/sha1.cpp
+index 8331e92..6a4a658 100644
+--- a/sha1.cpp
++++ b/sha1.cpp
+@@ -7,7 +7,7 @@
+ #include "sha1.h"
+ 
+ // big endian architectures need #define __BYTE_ORDER __BIG_ENDIAN
+-#ifndef _MSC_VER
++#if !defined(_MSC_VER) && !defined(__MINGW32__) && !defined(__MINGW64__)
+ #include <endian.h>
+ #endif
+ 
+diff --git a/sha256.cpp b/sha256.cpp
+index 8f0857d..98df261 100644
+--- a/sha256.cpp
++++ b/sha256.cpp
+@@ -7,7 +7,7 @@
+ #include "sha256.h"
+ 
+ // big endian architectures need #define __BYTE_ORDER __BIG_ENDIAN
+-#ifndef _MSC_VER
++#if !defined(_MSC_VER) && !defined(__MINGW32__) && !defined(__MINGW64__)
+ #include <endian.h>
+ #endif
+ 
+diff --git a/sha3.cpp b/sha3.cpp
+index 2f6bc7b..77a318a 100644
+--- a/sha3.cpp
++++ b/sha3.cpp
+@@ -7,7 +7,7 @@
+ #include "sha3.h"
+ 
+ // big endian architectures need #define __BYTE_ORDER __BIG_ENDIAN
+-#ifndef _MSC_VER
++#if !defined(_MSC_VER) && !defined(__MINGW32__) && !defined(__MINGW64__)
+ #include <endian.h>
+ #endif
+ 

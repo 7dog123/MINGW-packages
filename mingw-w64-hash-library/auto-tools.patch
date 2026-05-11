@@ -1,0 +1,81 @@
+diff --git a/Makefile.am b/Makefile.am
+new file mode 100644
+index 0000000..1fa73d5
+--- /dev/null
++++ b/Makefile.am
+@@ -0,0 +1,34 @@
++ACLOCAL_AMFLAGS = -I m4
++
++lib_LTLIBRARIES = libhash.la
++
++SOURCES = \
++    crc32.cpp \
++    keccak.cpp \
++    md5.cpp \
++    sha1.cpp \
++    sha256.cpp \
++    sha3.cpp
++
++libhash_la_SOURCES = $(SOURCES)
++
++include_HEADERS = \
++    crc32.h \
++    hash.h \
++    hmac.h \
++    keccak.h \
++    md5.h \
++    sha1.h \
++    sha256.h \
++    sha3.h
++
++EXTRA_DIST = \
++    LICENSE \
++    readme.h \
++    digest.cpp \
++    tests/tests.cpp \
++    tests/github-issue2.cpp \
++    tests/github-issue2.cpp
++
++pkgconfigdir = $(libdir)/pkgconfig
++pkgconfig_DATA = libhash.pc
+diff --git a/configure.ac b/configure.ac
+new file mode 100644
+index 0000000..d45afbb
+--- /dev/null
++++ b/configure.ac
+@@ -0,0 +1,17 @@
++AC_INIT([hash-library], [8.0.0])
++
++AM_INIT_AUTOMAKE([-Wall -Werror foreign])
++AC_CONFIG_MACRO_DIRS([m4])
++
++AC_PROG_CXX
++AM_PROG_AR
++
++LT_INIT
++
++AC_CONFIG_HEADERS([config.h])
++
++AC_CONFIG_FILES([
++    Makefile
++    libhash.pc
++])
++AC_OUTPUT
+diff --git a/libhash.pc.in b/libhash.pc.in
+new file mode 100644
+index 0000000..315877b
+--- /dev/null
++++ b/libhash.pc.in
+@@ -0,0 +1,12 @@
++prefix=@prefix@
++exec_prefix=@exec_prefix@
++libdir=@libdir@
++include=@includedir@
++
++Name: libhash
++Description: Portable C++ hashing library
++VERSION: @VERSION@
++Requires:
++Conflicts
++Libs: -L${libdir} -lhash
++Cflags: -I{includedir}
